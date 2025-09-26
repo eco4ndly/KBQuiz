@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Admin Login · KBC Quiz Master{% endblock %}
+{% block content %}
+<section class="card with-glow narrow">
+  <h2>Admin Login</h2>
+  <p class="subtitle">
+    Enter the admin password to manage competitions, topics, and questions.
+  </p>
+  <form method="post" class="form-grid">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="Enter admin password" required />
+    <button type="submit" class="primary-btn">Login</button>
+  </form>
+</section>
+{% endblock %}

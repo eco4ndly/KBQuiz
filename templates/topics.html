@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ competition.name }} Topics · KBC Quiz Master{% endblock %}
+{% block content %}
+<section class="card with-glow">
+  <header class="card-header">
+    <div>
+      <h2>{{ competition.name }} Topics</h2>
+      <p class="subtitle">Select a topic to start the KBC style quiz.</p>
+    </div>
+    <a href="{{ url_for('list_competitions') }}" class="secondary-btn">Back to Competitions</a>
+  </header>
+
+  {% if topics %}
+  <div class="card-list">
+    {% for topic in topics %}
+    <article class="mini-card">
+      <div>
+        <h3>{{ topic.title }}</h3>
+        <p class="meta">Questions Available: {{ topic.questions|length }}</p>
+      </div>
+      {% if topic.questions %}
+      <a class="primary-btn" href="{{ url_for('quiz', topic_id=topic.id) }}">Start Quiz</a>
+      {% else %}
+      <span class="disabled-btn">No Questions</span>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">No topics created yet. Check back soon!</p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ topic.title }} Quiz · KBC Quiz Master{% endblock %}
+{% block extra_head %}
+<meta name="turbo-visit-control" content="reload" />
+{% endblock %}
+{% block content %}
+<section class="card with-glow quiz-card">
+  <header class="card-header">
+    <div>
+      <h2>{{ topic.title }}</h2>
+      <p class="subtitle">Question {{ index + 1 }} of {{ total }}</p>
+    </div>
+    <a href="{{ url_for('list_topics', competition_id=topic.competition_id) }}" class="secondary-btn">Exit</a>
+  </header>
+
+  <div class="question-area">
+    <h3>{{ question.prompt }}</h3>
+    <ul class="options" data-correct="{{ question.correct_option }}">
+      <li class="option" data-option="A">{{ question.option_a }}</li>
+      <li class="option" data-option="B">{{ question.option_b }}</li>
+      <li class="option" data-option="C">{{ question.option_c }}</li>
+      <li class="option" data-option="D">{{ question.option_d }}</li>
+    </ul>
+    <div class="controls">
+      <button type="button" class="secondary-btn" data-action="clear">Clear Selection</button>
+      <button type="button" class="primary-btn" data-action="check">Check Answer</button>
+    </div>
+  </div>
+
+  <div class="navigation">
+    {% if previous_index %}
+    <a class="secondary-btn" href="{{ url_for('quiz', topic_id=topic.id, q=previous_index) }}">Previous</a>
+    {% else %}
+    <span class="disabled-btn">Previous</span>
+    {% endif %}
+
+    {% if next_index %}
+    <a class="primary-btn" href="{{ url_for('quiz', topic_id=topic.id, q=next_index) }}">Next</a>
+    {% else %}
+    <span class="disabled-btn">Next</span>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='quiz.js') }}" defer></script>
+{% endblock %}
