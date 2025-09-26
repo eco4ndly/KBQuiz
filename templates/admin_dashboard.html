@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard · KBC Quiz Master{% endblock %}
+{% block content %}
+<section class="card with-glow">
+  <header class="card-header">
+    <div>
+      <h2>Admin Dashboard</h2>
+      <p class="subtitle">Create competitions, manage topics, and feed exciting questions.</p>
+    </div>
+    <form method="post" action="{{ url_for('clear_all_data') }}" onsubmit="return confirm('Are you sure you want to remove every competition, topic, and question?');">
+      <button type="submit" class="danger-btn">Clear All Data</button>
+    </form>
+  </header>
+  <section class="form-grid">
+    <h3>Create a New Competition</h3>
+    <form method="post" action="{{ url_for('create_competition') }}" class="grid-two">
+      <label for="name">Competition Name</label>
+      <input type="text" name="name" id="name" placeholder="e.g., Science Bee" required />
+      <label for="description">Description</label>
+      <textarea name="description" id="description" rows="3" placeholder="Add a short blurb about this quiz."></textarea>
+      <button type="submit" class="primary-btn full-span">Create Competition</button>
+    </form>
+  </section>
+
+  <section class="list-section">
+    <h3>Existing Competitions</h3>
+    {% if competitions %}
+    <div class="card-list">
+      {% for competition in competitions %}
+      <article class="mini-card">
+        <div>
+          <h4>{{ competition.name }}</h4>
+          {% if competition.description %}<p>{{ competition.description }}</p>{% endif %}
+          <p class="meta">Created {{ competition.created_at.strftime('%d %b %Y') }}</p>
+        </div>
+        <a class="secondary-btn" href="{{ url_for('view_competition', competition_id=competition.id) }}">Manage Topics</a>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty">No competitions yet. Use the form above to create your first event.</p>
+    {% endif %}
+  </section>
+</section>
+{% endblock %}

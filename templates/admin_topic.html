@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ topic.title }} · Admin · KBC Quiz Master{% endblock %}
+{% block content %}
+<section class="card with-glow">
+  <header class="card-header">
+    <div>
+      <h2>{{ topic.title }}</h2>
+      <p class="subtitle">Add compelling questions with four options and a correct answer.</p>
+    </div>
+    <a href="{{ url_for('view_competition', competition_id=topic.competition_id) }}" class="secondary-btn">Back to Topics</a>
+  </header>
+
+  <section class="form-grid">
+    <h3>Add Question</h3>
+    <form method="post" action="{{ url_for('create_question', topic_id=topic.id) }}" class="grid-two">
+      <label for="prompt">Question Prompt</label>
+      <textarea id="prompt" name="prompt" rows="3" placeholder="Ask an exciting question." required></textarea>
+
+      <label for="option_a">Option A</label>
+      <input type="text" id="option_a" name="option_a" placeholder="Option A" required />
+
+      <label for="option_b">Option B</label>
+      <input type="text" id="option_b" name="option_b" placeholder="Option B" required />
+
+      <label for="option_c">Option C</label>
+      <input type="text" id="option_c" name="option_c" placeholder="Option C" required />
+
+      <label for="option_d">Option D</label>
+      <input type="text" id="option_d" name="option_d" placeholder="Option D" required />
+
+      <label for="correct_option">Correct Option (A/B/C/D)</label>
+      <input type="text" id="correct_option" name="correct_option" maxlength="1" pattern="[A-Da-d]" placeholder="A" required />
+
+      <button type="submit" class="primary-btn full-span">Add Question</button>
+    </form>
+  </section>
+
+  <section class="list-section">
+    <h3>Questions</h3>
+    {% if questions %}
+    <div class="card-list">
+      {% for question in questions %}
+      <article class="question-card">
+        <h4>{{ loop.index }}. {{ question.prompt }}</h4>
+        <ul>
+          <li><span>A.</span> {{ question.option_a }}</li>
+          <li><span>B.</span> {{ question.option_b }}</li>
+          <li><span>C.</span> {{ question.option_c }}</li>
+          <li><span>D.</span> {{ question.option_d }}</li>
+        </ul>
+        <p class="meta">Correct Answer: {{ question.correct_option }}</p>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty">No questions yet. Use the form above to create one.</p>
+    {% endif %}
+  </section>
+</section>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}KBC Quiz Master{% endblock %}</title>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    <div class="background-gradient"></div>
+    <header class="app-header">
+      <h1 class="app-title">KBC Quiz Master</h1>
+      <nav class="app-nav">
+        <a href="{{ url_for('list_competitions') }}">Competitions</a>
+        <a href="{{ url_for('admin_dashboard') }}">Admin</a>
+        {% if is_admin_authenticated %}
+        <a href="{{ url_for('admin_logout') }}">Logout</a>
+        {% else %}
+        <a href="{{ url_for('admin_login') }}">Admin Login</a>
+        {% endif %}
+      </nav>
+    </header>
+
+    <main class="content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="flash-container">
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="app-footer">
+      <p>
+        Stored Competitions: {{ competition_count }} · Topics: {{ topic_count }} · Questions:
+        {{ question_count }}
+      </p>
+    </footer>
+    {% block extra_scripts %}{% endblock %}
+  </body>
+</html>

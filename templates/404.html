@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Not Found · KBC Quiz Master{% endblock %}
+{% block content %}
+<section class="card with-glow narrow">
+  <h2>Oops! Page not found.</h2>
+  <p class="subtitle">The page you are looking for has gone on a quiz adventure.</p>
+  <a class="primary-btn" href="{{ url_for('list_competitions') }}">Back to Competitions</a>
+</section>
+{% endblock %}

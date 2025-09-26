@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+instance/
+quiz.db
+*.sqlite3
+.env
+.venv/
