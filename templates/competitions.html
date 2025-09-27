@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Competitions · KBC Quiz Master{% endblock %}
+{% block content %}
+<section class="card with-glow">
+  <header class="card-header">
+    <div>
+      <h2>Choose Your Competition</h2>
+      <p class="subtitle">Dive into a colourful world of knowledge and thrills.</p>
+    </div>
+    <a href="{{ url_for('admin_dashboard') }}" class="secondary-btn">Go to Admin</a>
+  </header>
+
+  {% if competitions %}
+  <div class="card-list">
+    {% for competition in competitions %}
+    <article class="mini-card">
+      <div>
+        <h3>{{ competition.name }}</h3>
+        {% if competition.description %}<p>{{ competition.description }}</p>{% endif %}
+        <p class="meta">Topics: {{ competition.topics|length }}</p>
+      </div>
+      <a class="primary-btn" href="{{ url_for('list_topics', competition_id=competition.id) }}">View Topics</a>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">No competitions yet. Ask the admin to create one!</p>
+  {% endif %}
+</section>
+{% endblock %}

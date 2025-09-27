@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ competition.name }} · Admin · KBC Quiz Master{% endblock %}
+{% block content %}
+<section class="card with-glow">
+  <header class="card-header">
+    <div>
+      <h2>{{ competition.name }}</h2>
+      {% if competition.description %}
+      <p class="subtitle">{{ competition.description }}</p>
+      {% endif %}
+    </div>
+    <a href="{{ url_for('admin_dashboard') }}" class="secondary-btn">Back to Dashboard</a>
+  </header>
+
+  <section class="form-grid">
+    <h3>Add Topic</h3>
+    <form method="post" action="{{ url_for('create_topic', competition_id=competition.id) }}" class="grid-two">
+      <label for="title">Topic Title</label>
+      <input type="text" id="title" name="title" placeholder="e.g., Indian History" required />
+      <button type="submit" class="primary-btn full-span">Add Topic</button>
+    </form>
+  </section>
+
+  <section class="list-section">
+    <h3>Topics</h3>
+    {% if topics %}
+    <div class="card-list">
+      {% for topic in topics %}
+      <article class="mini-card">
+        <div>
+          <h4>{{ topic.title }}</h4>
+          <p class="meta">Questions: {{ topic.questions|length }}</p>
+        </div>
+        <a class="secondary-btn" href="{{ url_for('view_topic', topic_id=topic.id) }}">Add Questions</a>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty">No topics yet. Add one to start creating questions.</p>
+    {% endif %}
+  </section>
+</section>
+{% endblock %}
